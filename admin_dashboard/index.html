@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHISH GUARD - Cybersecurity & Threat Intelligence Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body class="dark-theme">
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-box">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h2>PHISH<span>GUARD</span></h2>
+          <span class="sub-label">SOC INTELLIGENCE</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <button class="nav-item active" data-page="dashboardPage">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          Dashboard Overview
+        </button>
+
+        <button class="nav-item" data-page="historyPage">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Scan History
+        </button>
+
+        <button class="nav-item" data-page="blacklistPage">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+          </svg>
+          Blacklist Manager
+        </button>
+
+        <button class="nav-item" data-page="reportsPage">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          Threat Reports
+        </button>
+
+        <button class="nav-item" data-page="analyticsPage">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          Analytics & Trends
+        </button>
+
+        <button class="nav-item" data-page="modelsPage">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+          Model Performance
+        </button>
+
+        <button class="nav-item" data-page="settingsPage">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          System Settings
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="system-status">
+          <span class="status-indicator online" id="backendStatusDot"></span>
+          <span class="status-name" id="backendStatusText">Backend Online</span>
+        </div>
+        <span class="version-tag">v1.0.0 Prod</span>
+      </div>
+    </aside>
+
+    <!-- Main View Area -->
+    <main class="main-content">
+      <!-- Top Navbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 id="pageTitle">Dashboard Overview</h1>
+          <span class="breadcrumb">SOC Monitoring & ML Telemetry</span>
+        </div>
+        <div class="topbar-right">
+          <button id="refreshDataBtn" class="action-btn" title="Refresh Live Data">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 4v6h-6M1 20v-6h6"/>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            Sync Telemetry
+          </button>
+          <button id="themeToggleBtn" class="action-btn icon-only" title="Toggle Theme">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="page-container">
+
+        <!-- ==========================================
+             PAGE 1: DASHBOARD OVERVIEW
+             ========================================== -->
+        <section id="dashboardPage" class="page-view active">
+          <!-- 6 Stat Cards -->
+          <div class="stats-cards-grid">
+            <div class="card stat-card">
+              <div class="stat-meta">
+                <span class="stat-title">Total URLs Scanned</span>
+                <span class="stat-number" id="cardTotalScans">0</span>
+              </div>
+              <div class="stat-icon-box cyan">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-meta">
+                <span class="stat-title">Dangerous Websites</span>
+                <span class="stat-number text-danger" id="cardDangerousScans">0</span>
+              </div>
+              <div class="stat-icon-box red">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-meta">
+                <span class="stat-title">Safe Websites</span>
+                <span class="stat-number text-safe" id="cardSafeScans">0</span>
+              </div>
+              <div class="stat-icon-box green">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-meta">
+                <span class="stat-title">Suspicious Websites</span>
+                <span class="stat-number text-warn" id="cardSuspiciousScans">0</span>
+              </div>
+              <div class="stat-icon-box yellow">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-meta">
+                <span class="stat-title">Blocked Domains</span>
+                <span class="stat-number" id="cardBlockedDomains">0</span>
+              </div>
+              <div class="stat-icon-box purple">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-meta">
+                <span class="stat-title">Average Confidence</span>
+                <span class="stat-number text-accent" id="cardAvgConfidence">0.0%</span>
+              </div>
+              <div class="stat-icon-box blue">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Grid Row 1 -->
+          <div class="charts-row-2">
+            <div class="card chart-card">
+              <div class="card-header">
+                <h3>Safe vs Phishing Distribution</h3>
+                <span class="card-tag">Threat Breakdown</span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="safeVsPhishingChart"></canvas>
+              </div>
+            </div>
+
+            <div class="card chart-card">
+              <div class="card-header">
+                <h3>Scan Velocity (Daily Activity)</h3>
+                <span class="card-tag">Timeline</span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="dailyScansChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Grid Row 2 -->
+          <div class="charts-row-2">
+            <div class="card chart-card">
+              <div class="card-header">
+                <h3>Prediction Classes</h3>
+                <span class="card-tag">Categorization</span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="predictionDistChart"></canvas>
+              </div>
+            </div>
+
+            <div class="card chart-card">
+              <div class="card-header">
+                <h3>Top Suspicious Domains Detected</h3>
+                <span class="card-tag">Target Frequency</span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="topSuspiciousChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 2: SCAN HISTORY
+             ========================================== -->
+        <section id="historyPage" class="page-view">
+          <div class="card table-card">
+            <div class="card-header table-controls">
+              <div class="filter-group">
+                <input type="text" id="historySearchInput" placeholder="Search by URL or domain..." class="search-input">
+                <select id="historyStatusFilter" class="select-input">
+                  <option value="all">All Classifications</option>
+                  <option value="Safe">Safe</option>
+                  <option value="Suspicious">Suspicious</option>
+                  <option value="Phishing">Phishing</option>
+                  <option value="Malicious">Malicious</option>
+                </select>
+              </div>
+              <span class="record-counter" id="historyTotalCount">Showing 0 records</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Analyzed URL / Domain</th>
+                    <th>Prediction</th>
+                    <th>Confidence</th>
+                    <th>Risk Level</th>
+                    <th>Latency</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                  <tr><td colspan="7" class="empty-cell">Loading scan telemetry...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 3: BLACKLIST MANAGER
+             ========================================== -->
+        <section id="blacklistPage" class="page-view">
+          <div class="blacklist-layout">
+            <!-- Add Blacklist Card -->
+            <div class="card form-card">
+              <div class="card-header">
+                <h3>Add Domain to Blacklist</h3>
+              </div>
+              <form id="addBlacklistForm">
+                <div class="form-group">
+                  <label for="blPattern">Domain or Pattern *</label>
+                  <input type="text" id="blPattern" placeholder="e.g. evil-phishing.xyz" required class="text-input">
+                </div>
+                <div class="form-group">
+                  <label for="blReason">Threat Reason *</label>
+                  <input type="text" id="blReason" placeholder="e.g. Known credential harvester" required class="text-input">
+                </div>
+                <button type="submit" class="submit-btn full-width">Block Domain Instantly</button>
+                <div class="form-msg" id="blFormMsg"></div>
+              </form>
+            </div>
+
+            <!-- Blacklist Table Card -->
+            <div class="card table-card flex-2">
+              <div class="card-header">
+                <h3>Active Blocklist Entries</h3>
+                <span class="card-tag" id="blacklistCountTag">0 Rules</span>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Pattern / Domain</th>
+                      <th>Reason</th>
+                      <th>Added By</th>
+                      <th>Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="blacklistTableBody">
+                    <tr><td colspan="5" class="empty-cell">Loading blacklisted patterns...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 4: THREAT REPORTS
+             ========================================== -->
+        <section id="reportsPage" class="page-view">
+          <div class="card table-card">
+            <div class="card-header">
+              <h3>Community & User Feedback Reports</h3>
+              <span class="card-tag">Model Retraining Queue</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Report ID</th>
+                    <th>Target URL</th>
+                    <th>Feedback Type</th>
+                    <th>Claimed Type</th>
+                    <th>Actual Status</th>
+                    <th>User Comments</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="reportsTableBody">
+                  <tr><td colspan="7" class="empty-cell">No feedback reports found.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 5: ANALYTICS & TRENDS
+             ========================================== -->
+        <section id="analyticsPage" class="page-view">
+          <div class="charts-row-2">
+            <div class="card chart-card">
+              <div class="card-header">
+                <h3>Confidence Distribution</h3>
+                <span class="card-tag">Model Certainty</span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="confidenceDistChart"></canvas>
+              </div>
+            </div>
+
+            <div class="card chart-card">
+              <div class="card-header">
+                <h3>Weekly Scanning Volume</h3>
+                <span class="card-tag">Aggregated Ingestion</span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="weeklyScansChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="card info-card mt-4">
+            <div class="card-header">
+              <h3>Threat Intelligence Analysis</h3>
+            </div>
+            <div class="intel-metrics-grid">
+              <div class="intel-metric">
+                <span class="intel-val text-danger" id="intelFalsePositives">0</span>
+                <span class="intel-label">Reported False Positives</span>
+              </div>
+              <div class="intel-metric">
+                <span class="intel-val text-warn" id="intelFalseNegatives">0</span>
+                <span class="intel-label">Reported False Negatives</span>
+              </div>
+              <div class="intel-metric">
+                <span class="intel-val text-accent" id="intelAvgLatency">18.4 ms</span>
+                <span class="intel-label">Average Pipeline Latency</span>
+              </div>
+              <div class="intel-metric">
+                <span class="intel-val text-safe">30 Vectors</span>
+                <span class="intel-label">Engineered Features</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 6: MODEL PERFORMANCE
+             ========================================== -->
+        <section id="modelsPage" class="page-view">
+          <!-- Active Model Hero -->
+          <div class="card champion-model-card">
+            <div class="champion-badge">ACTIVE PRODUCTION CHAMPION</div>
+            <h2 id="championModelName">Gradient Boosting</h2>
+            <p>Selected automatically by the Multi-Algorithm Benchmarking Pipeline based on optimal F1-score & ROC-AUC.</p>
+            <div class="model-metrics-grid" id="championMetricsGrid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Comparison Table Card -->
+          <div class="card table-card mt-4">
+            <div class="card-header">
+              <h3>Algorithm Benchmark Comparison</h3>
+              <span class="card-tag">7 Algorithms Tested</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Algorithm</th>
+                    <th>Accuracy</th>
+                    <th>Precision</th>
+                    <th>Recall</th>
+                    <th>F1 Score</th>
+                    <th>ROC-AUC</th>
+                    <th>Training Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="modelsTableBody">
+                  <tr><td colspan="8" class="empty-cell">Loading benchmarks...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Feature Importance Card -->
+          <div class="card mt-4">
+            <div class="card-header">
+              <h3>Key Feature Importances</h3>
+              <span class="card-tag">Top Lexical Weights</span>
+            </div>
+            <div class="feature-importance-bars" id="featureImportanceContainer">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 7: SYSTEM SETTINGS
+             ========================================== -->
+        <section id="settingsPage" class="page-view">
+          <div class="card settings-card">
+            <div class="card-header">
+              <h3>Detection Thresholds & Operational Policy</h3>
+            </div>
+            <form id="settingsForm">
+              <div class="settings-grid" id="settingsContainer">
+                <!-- Dynamically populated from /api/settings -->
+              </div>
+              <button type="submit" class="submit-btn mt-4">Save Configuration</button>
+              <div class="form-msg" id="settingsFormMsg"></div>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scan Details Modal -->
+  <div class="modal-overlay" id="detailsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalDomain">Domain Details</h3>
+        <button class="modal-close" id="closeModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta-row">
+          <span class="modal-pill" id="modalPrediction">Safe</span>
+          <span class="modal-pill text-accent" id="modalConfidence">98% Conf</span>
+          <span class="modal-pill" id="modalLatency">14 ms</span>
+        </div>
+        <div class="modal-section-title">URL:</div>
+        <div class="modal-code-box" id="modalUrl">...</div>
+        <div class="modal-section-title">Detection Reasons:</div>
+        <ul class="modal-reasons-list" id="modalReasons"></ul>
+        <div class="modal-section-title">Extracted Features (30):</div>
+        <div class="modal-features-grid" id="modalFeatures"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard JavaScript Modules -->
+  <script src="js/charts.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

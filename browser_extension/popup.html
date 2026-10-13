@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHISH GUARD</title>
+  <link rel="stylesheet" href="popup.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+  <div class="extension-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="shield-logo">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4" stroke-dasharray="20" class="shield-check"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">PHISH<span class="accent-text">GUARD</span></span>
+          <span class="engine-badge">ML 3.12</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggleBtn" class="icon-btn" title="Toggle Dark/Light Mode">
+          <svg id="themeIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+        <button id="rescanBtn" class="icon-btn" title="Rescan Current URL">
+          <svg id="rescanIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6M1 20v-6h6"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="scanTab">Live Scan</button>
+      <button class="tab-btn" data-tab="featuresTab">Features</button>
+      <button class="tab-btn" data-tab="historyTab">History</button>
+      <button class="tab-btn" data-tab="reportTab">Feedback</button>
+    </nav>
+
+    <!-- Main Content Tabs -->
+    <main class="tab-content-area">
+      <!-- Tab 1: Live Scan -->
+      <section id="scanTab" class="tab-pane active">
+        <!-- Target URL Bar -->
+        <div class="target-url-box">
+          <div class="protocol-icon" id="protocolBadge">HTTPS</div>
+          <div class="url-text" id="targetUrlText" title="Current URL">Detecting active tab...</div>
+        </div>
+
+        <!-- Threat Result Card -->
+        <div class="status-card" id="statusCard">
+          <div class="status-header">
+            <div class="status-indicator-ring" id="statusRing">
+              <span class="ring-pulse"></span>
+              <div class="status-glyph" id="statusGlyph">✓</div>
+            </div>
+            <div class="status-text-meta">
+              <div class="status-label" id="statusLabel">SAFE WEBSITE</div>
+              <div class="risk-badge" id="riskBadge">Low Risk</div>
+            </div>
+          </div>
+
+          <!-- Metrics Row -->
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <span class="metric-title">Confidence</span>
+              <span class="metric-val" id="confidenceVal">--%</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-title">Latency</span>
+              <span class="metric-val" id="latencyVal">-- ms</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-title">Domain</span>
+              <span class="metric-val domain-truncate" id="domainVal">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detection Reasons List -->
+        <div class="reasons-panel">
+          <div class="panel-subtitle">Key Security Indicators</div>
+          <ul class="reasons-list" id="reasonsList">
+            <li class="loading-placeholder">Evaluating heuristic and ML signatures...</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Tab 2: Feature Breakdown -->
+      <section id="featuresTab" class="tab-pane">
+        <div class="features-summary-header">
+          <span class="features-title">Extracted Lexical & Security Vectors</span>
+          <span class="features-count-tag" id="featureCountTag">30 Features</span>
+        </div>
+        <div class="features-scroll-box" id="featuresListContainer">
+          <div class="loading-placeholder">Loading extracted URL vectors...</div>
+        </div>
+      </section>
+
+      <!-- Tab 3: Local Scan History -->
+      <section id="historyTab" class="tab-pane">
+        <div class="history-header">
+          <span class="panel-subtitle">Recent Scans in This Session</span>
+          <button id="clearHistoryBtn" class="text-link-btn">Clear</button>
+        </div>
+        <div class="history-list" id="historyList">
+          <div class="empty-state">No local scans recorded yet.</div>
+        </div>
+      </section>
+
+      <!-- Tab 4: Report False Positive / Negative -->
+      <section id="reportTab" class="tab-pane">
+        <div class="report-box">
+          <span class="panel-subtitle">Report Detection Inaccuracy</span>
+          <p class="report-desc">Help improve Phish Guard model weights by flagging misclassified sites.</p>
+
+          <form id="reportForm">
+            <div class="form-group">
+              <label>Classification Issue</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="reportType" value="false_positive" checked>
+                  <span>False Positive (Safe site flagged as threat)</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="reportType" value="false_negative">
+                  <span>False Negative (Phishing site marked Safe)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="reportComments">Additional Context (Optional)</label>
+              <textarea id="reportComments" rows="3" placeholder="Explain why this domain was misclassified..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitReportBtn">Submit Threat Intelligence</button>
+            <div class="form-feedback" id="reportFeedback"></div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <span class="status-dot online"></span>
+        <span class="footer-text">Engine Online</span>
+      </div>
+      <a href="http://127.0.0.1:5000/dashboard" target="_blank" class="dashboard-link">
+        Admin Dashboard →
+      </a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

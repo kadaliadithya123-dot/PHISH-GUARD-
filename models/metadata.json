@@ -1,0 +1,217 @@
+{
+    "active_model_name": "Gradient Boosting",
+    "feature_count": 30,
+    "feature_names": [
+        "url_length",
+        "domain_length",
+        "path_length",
+        "count_dots",
+        "count_hyphens",
+        "count_digits",
+        "count_subdomains",
+        "has_https",
+        "has_http",
+        "has_ip_address",
+        "count_at",
+        "count_percent",
+        "count_underscore",
+        "count_equal",
+        "count_question",
+        "count_ampersand",
+        "has_double_slash_path",
+        "num_parameters",
+        "url_entropy",
+        "domain_entropy",
+        "suspicious_keywords_count",
+        "brand_impersonation",
+        "is_shortened_url",
+        "has_punycode",
+        "has_homoglyphs",
+        "tld_risk_score",
+        "digit_to_letter_ratio",
+        "has_port",
+        "consecutive_hyphens",
+        "tld_in_subdomain"
+    ],
+    "train_samples": 2980,
+    "test_samples": 745,
+    "champion_metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "roc_auc": 1.0,
+        "training_time": 0.5179,
+        "confusion_matrix": [
+            [
+                392,
+                0
+            ],
+            [
+                0,
+                353
+            ]
+        ]
+    },
+    "all_model_benchmarks": {
+        "Random Forest": {
+            "accuracy": 0.9987,
+            "precision": 0.9972,
+            "recall": 1.0,
+            "f1_score": 0.9986,
+            "roc_auc": 1.0,
+            "training_time": 0.3202,
+            "confusion_matrix": [
+                [
+                    391,
+                    1
+                ],
+                [
+                    0,
+                    353
+                ]
+            ]
+        },
+        "Gradient Boosting": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "roc_auc": 1.0,
+            "training_time": 0.5179,
+            "confusion_matrix": [
+                [
+                    392,
+                    0
+                ],
+                [
+                    0,
+                    353
+                ]
+            ]
+        },
+        "Support Vector Machine (SVC)": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "roc_auc": 1.0,
+            "training_time": 0.1635,
+            "confusion_matrix": [
+                [
+                    392,
+                    0
+                ],
+                [
+                    0,
+                    353
+                ]
+            ]
+        },
+        "Logistic Regression": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "roc_auc": 1.0,
+            "training_time": 0.0129,
+            "confusion_matrix": [
+                [
+                    392,
+                    0
+                ],
+                [
+                    0,
+                    353
+                ]
+            ]
+        },
+        "K-Nearest Neighbors": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "roc_auc": 1.0,
+            "training_time": 0.0017,
+            "confusion_matrix": [
+                [
+                    392,
+                    0
+                ],
+                [
+                    0,
+                    353
+                ]
+            ]
+        },
+        "Decision Tree": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "roc_auc": 1.0,
+            "training_time": 0.0123,
+            "confusion_matrix": [
+                [
+                    392,
+                    0
+                ],
+                [
+                    0,
+                    353
+                ]
+            ]
+        },
+        "Naive Bayes (Gaussian)": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "roc_auc": 1.0,
+            "training_time": 0.0049,
+            "confusion_matrix": [
+                [
+                    392,
+                    0
+                ],
+                [
+                    0,
+                    353
+                ]
+            ]
+        }
+    },
+    "feature_importances": {
+        "tld_risk_score": 0.6764,
+        "digit_to_letter_ratio": 0.0837,
+        "count_question": 0.0634,
+        "num_parameters": 0.0612,
+        "count_equal": 0.0585,
+        "path_length": 0.0199,
+        "consecutive_hyphens": 0.0091,
+        "is_shortened_url": 0.0077,
+        "has_https": 0.0066,
+        "has_http": 0.0059,
+        "count_hyphens": 0.0056,
+        "has_punycode": 0.002,
+        "url_length": 0.0,
+        "domain_length": 0.0,
+        "count_dots": 0.0,
+        "count_digits": -0.0,
+        "count_subdomains": 0.0,
+        "has_ip_address": 0.0,
+        "count_at": 0.0,
+        "count_percent": 0.0,
+        "count_underscore": 0.0,
+        "count_ampersand": 0.0,
+        "has_double_slash_path": 0.0,
+        "url_entropy": 0.0,
+        "domain_entropy": 0.0,
+        "suspicious_keywords_count": 0.0,
+        "brand_impersonation": 0.0,
+        "has_homoglyphs": 0.0,
+        "has_port": 0.0,
+        "tld_in_subdomain": 0.0
+    },
+    "created_at": "2026-10-13 11:38:13"
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Alert: Phishing Detected | PHISH GUARD</title>
+  <link rel="stylesheet" href="warning.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="warning-wrapper">
+    <div class="warning-container">
+      <!-- Shield Alert Header -->
+      <div class="alert-icon-wrapper">
+        <svg class="alert-shield-icon" viewBox="0 0 24 24" width="72" height="72" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+
+      <div class="threat-classification" id="threatClassification">
+        CRITICAL THREAT DETECTED
+      </div>
+      <h1 class="warning-title">Deceptive or Malicious Website Blocked</h1>
+      <p class="warning-subtitle">
+        Phish Guard's Machine Learning and Heuristic Defense Engine identified this page as an active credential phishing or security risk.
+      </p>
+
+      <!-- URL Meta Box -->
+      <div class="url-meta-box">
+        <div class="url-label">SUSPICIOUS DESTINATION</div>
+        <div class="target-url" id="targetUrlDisplay">http://...</div>
+      </div>
+
+      <!-- Threat Metrics Row -->
+      <div class="threat-stats-row">
+        <div class="threat-stat-card">
+          <span class="stat-label">Risk Level</span>
+          <span class="stat-value text-danger" id="riskLevelDisplay">Critical</span>
+        </div>
+        <div class="threat-stat-card">
+          <span class="stat-label">ML Confidence</span>
+          <span class="stat-value" id="confidenceDisplay">99.4%</span>
+        </div>
+        <div class="threat-stat-card">
+          <span class="stat-label">Model Verification</span>
+          <span class="stat-value text-accent">Active ML Guard</span>
+        </div>
+      </div>
+
+      <!-- Reasons for Detection -->
+      <div class="reasons-card">
+        <div class="reasons-heading">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          Detection Reasons & Threat Indicators:
+        </div>
+        <ul class="reasons-list" id="warningReasonsList">
+          <li>Deceptive domain syntax mimicking legitimate institutional services.</li>
+          <li>Unencrypted transmission or spoofed top-level domain structure.</li>
+        </ul>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons-group">
+        <button id="goBackBtn" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back to Safety (Recommended)
+        </button>
+        <button id="continueAnywayBtn" class="btn btn-secondary">
+          Continue Anyway (Unsafe)
+        </button>
+      </div>
+
+      <!-- Secondary Links -->
+      <div class="secondary-actions">
+        <button id="reportFpBtn" class="link-btn">Report False Positive</button>
+        <span class="divider">•</span>
+        <button id="learnMoreBtn" class="link-btn">Learn More About This Threat</button>
+      </div>
+
+      <!-- Collapsible Educational Section -->
+      <div class="educational-panel" id="educationalPanel">
+        <h3>How Phishing Attacks Work</h3>
+        <p>Phishing websites impersonate legitimate services (such as banking institutions, cloud providers, or social networks) to harvest your login credentials, credit card details, or sensitive cryptographic keys.</p>
+        <h4>What Phish Guard Detected on This URL:</h4>
+        <p>Our 30-feature vector analyzed the lexical anatomy, domain age heuristics, Shannon entropy, homoglyph lookalikes, and known phishing patterns to prevent credential theft before page rendering.</p>
+      </div>
+
+      <div class="report-status-msg" id="reportStatusMsg"></div>
+    </div>
+  </div>
+
+  <script src="warning.js"></script>
+</body>
+</html>
