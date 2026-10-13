@@ -4,7 +4,7 @@
  * executing real-time threat scans, managing badges, and enforcing blocking warnings.
  */
 
-const API_BASE_URL = "http://127.0.0.1:5000";
+const API_BASE_URL = "https://phish-guard-api.onrender.com";
 const CACHE_EXPIRY_MS = 10 * 60 * 1000; // 10 minutes cache
 const BYPASS_EXPIRY_MS = 60 * 60 * 1000; // 1 hour temporary bypass
 
