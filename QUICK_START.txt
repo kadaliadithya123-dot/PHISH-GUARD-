@@ -1,0 +1,70 @@
+========================================================================
+   PHISH GUARD - SUPER EASY QUICK START GUIDE FOR YOUR FRIEND
+========================================================================
+
+Hi! Welcome to PHISH GUARD.
+This project protects your web browser from fake/phishing websites 
+using AI/Machine Learning in real time.
+
+Follow these 4 simple steps to run this project:
+
+------------------------------------------------------------------------
+STEP 1: INSTALL PYTHON (If you don't have it yet)
+------------------------------------------------------------------------
+1. Download and install Python 3.12 or newer from: https://www.python.org/
+2. IMPORTANT: During installation, make sure to CHECK the box that says:
+   [x] "Add Python to PATH"
+
+------------------------------------------------------------------------
+STEP 2: INSTALL REQUIRED PACKAGES
+------------------------------------------------------------------------
+1. Open Command Prompt (CMD) or PowerShell on your computer.
+2. Go to this project folder (where this file is located):
+   cd path\to\PHISH-GUARD
+3. Type this command and press Enter:
+   pip install -r requirements.txt
+
+------------------------------------------------------------------------
+STEP 3: START THE AI BACKEND SERVER
+------------------------------------------------------------------------
+1. In the same command prompt, go inside the backend folder:
+   cd backend
+2. Start the server with this command:
+   python app.py
+3. You will see:
+   "Starting PHISH GUARD Backend on http://127.0.0.1:5000"
+   LEAVE THIS WINDOW OPEN while using the extension!
+
+------------------------------------------------------------------------
+STEP 4: LOAD THE EXTENSION IN GOOGLE CHROME
+------------------------------------------------------------------------
+1. Open Google Chrome.
+2. In the top address bar, type:
+   chrome://extensions/
+   and press Enter.
+3. In the TOP-RIGHT corner, turn ON the switch called "Developer mode".
+4. In the TOP-LEFT corner, click the button called "Load unpacked".
+5. A file chooser window will open. Select the folder called:
+   "browser_extension" inside this project.
+6. Click "Select Folder".
+7. Done! Click the Puzzle icon in Chrome and pin PHISH GUARD to your toolbar.
+
+------------------------------------------------------------------------
+STEP 5: OPEN THE ADMIN DASHBOARD
+------------------------------------------------------------------------
+Open your browser and visit:
+http://127.0.0.1:5000/dashboard
+
+Here you will see charts, live scans, blocked websites, and AI statistics!
+
+------------------------------------------------------------------------
+HOW TO TEST IF IT WORKS:
+------------------------------------------------------------------------
+1. Visit a safe website like: https://www.wikipedia.org
+   -> Extension badge will turn GREEN ("SAFE").
+2. Visit a phishing test link like:
+   http://paypal-verification-alert-account.xyz/login.php
+   -> Extension will immediately BLOCK it with a full-screen red Warning!
+
+Enjoy using PHISH GUARD!
+========================================================================
